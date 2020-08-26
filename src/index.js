@@ -2,16 +2,21 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import * as serviceWorker from './serviceWorker';
+import { createStore } from 'redux'
+import counterReducer from './redux/reducer'
+
+import { Provider } from 'react-redux'
+
+let store = createStore(counterReducer)
+//our components will never access the store directly (by for example literally exporting it and importing it into another file), they'll use CONNECT to access this very same store
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <App anotherProp="somethingElse"/>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+//PWA
